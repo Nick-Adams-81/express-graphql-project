@@ -7,6 +7,9 @@ const {
   GraphQLString,
   GraphQLList,
 } = graphql;
+const { PrismaClient } = require("@prisma/client")
+const prisma = new PrismaClient
+
 const UserType = require('./TypeDefs/UserType')
 const userData = require('../MOCK_DATA.json')
 
@@ -17,7 +20,7 @@ const RootQuery = new GraphQLObjectType({
         type: new GraphQLList(UserType),
         args: { id: { type: GraphQLInt } },
         resolve(parent, args) {
-          return userData;
+          return prisma.user.findMany({});
         },
       },
     },
@@ -34,8 +37,7 @@ const RootQuery = new GraphQLObjectType({
           email: { type: GraphQLString },
         },
         resolve(parent, args) {
-          userData.push({
-            id: userData.length + 1,
+          return prisma.user.create({
             first_name: args.first_name,
             last_name: args.last_name,
             email: args.email,
