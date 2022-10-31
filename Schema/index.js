@@ -13,7 +13,7 @@ const userData = require('../MOCK_DATA.json')
 const RootQuery = new GraphQLObjectType({
     name: "RootQueryType",
     fields: {
-      getAllUsers: {
+      getAllUsers: { // name of GET route in rest 
         type: new GraphQLList(UserType),
         args: { id: { type: GraphQLInt } },
         resolve(parent, args) {
@@ -26,7 +26,7 @@ const RootQuery = new GraphQLObjectType({
   const Mutation = new GraphQLObjectType({
     name: "Mutation",
     fields: {
-      createUser: {
+      createUser: { // name of POST route in rest
         type: UserType,
         args: {
           first_name: { type: GraphQLString },
